@@ -1,4 +1,5 @@
 package com.xmlProject.model;
+
 import java.util.InputMismatchException;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -12,9 +13,9 @@ import javax.xml.bind.annotation.XmlType;
  *@version 1.0
  */
 
-@XmlRootElement(name = "homeWork")
+@XmlRootElement(name = "homework")
 @XmlType(propOrder = {"task", "platform", "endDate", "hint"})
-public class HomeWork {
+public class Homework {
 
 	private String name;
 	private String task;
@@ -25,19 +26,19 @@ public class HomeWork {
 	/**
 	 * an empty constructor for initialization
 	 */
-	public HomeWork(){
+	public Homework(){
 		
 	}
 	
 	/**
-	 * full set constructor for initialization class HomeWork
+	 * full set constructor for initialization class Homework
 	 * 
 	 * @param name the name of the homework
 	 * @param task question for the homework
 	 * @param endDate the deadline
 	 * @param hint array of hints (if user want to give any)
 	 */
-	public HomeWork(String name, String task, String endDate, String hint){
+	public Homework(String name, String task, String endDate, String hint){
 		setName(name);
 		setTask(task);
 		setEndDate(endDate);
@@ -77,7 +78,7 @@ public class HomeWork {
 	 */
 	@XmlElement
 	public void setTask(String task) throws InputMismatchException {
-		setGeneral(task);
+		//setGeneral(task);
 		this.task = task;
 	}
 	
@@ -93,9 +94,9 @@ public class HomeWork {
 	 * @param platform the name of IDE to use
 	 * @throws InputMismatchException if fails the verification
 	 */
-	@XmlElement
+	@XmlElement(name = "platform")
 	public void setPlatform(String platform) throws InputMismatchException {
-		setGeneral(platform);
+	//	setGeneral(platform);
 		this.platform = platform;
 	}
 
@@ -137,7 +138,7 @@ public class HomeWork {
 	 */
 	@XmlElement
 	public void setHint(String hint) throws InputMismatchException {
-		setGeneral(hint);
+		//setGeneral(hint);
 		this.hint = hint;
 	}
 	

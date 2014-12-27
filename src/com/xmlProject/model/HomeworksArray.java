@@ -6,16 +6,16 @@ import java.util.ArrayList;
  * @author Dimitar Bochev
  *@version 1.0
  */
-public class HomeWorksArray {
+public class HomeworksArray {
 
-	private ArrayList<HomeWork> array;
+	private ArrayList<Homework> array;
 	private int currentElement;
 	
 	/**
 	 * empty constructor for initialization
 	 */
-	public HomeWorksArray(){
-		array = new ArrayList<HomeWork>();
+	public HomeworksArray(){
+		array = new ArrayList<Homework>();
 		currentElement = 0;
 	}
 	
@@ -23,8 +23,8 @@ public class HomeWorksArray {
 	 * one parameter constructor... adds that parameter to array
 	 * @param homeWork instance of class HomeWork
 	 */
-	public HomeWorksArray(HomeWork homeWork){
-		array = new ArrayList<HomeWork>();
+	public HomeworksArray(Homework homeWork){
+		array = new ArrayList<Homework>();
 		addElement(homeWork);
 	}
 	
@@ -33,13 +33,13 @@ public class HomeWorksArray {
 	 * if parameter exists it wont be added 
 	 * @param homeWork instance of class HomeWork
 	 */
-	public void addElement(HomeWork homeWork){
+	public void addElement(Homework homeWork){
 		if (!this.array.contains(homeWork)) {
 			array.add(homeWork);
 		}
 	}
 	
-	public HomeWork getNextElement(){
+	public Homework getNextElement(){
 		currentElement += 1;
 		return array.get(currentElement);
 	}
@@ -48,8 +48,8 @@ public class HomeWorksArray {
 	 * adds entire array
 	 * @param array ArrayList<HomeWork>
 	 */
-	public void addArray(ArrayList<HomeWork> array){
-		for (HomeWork homeWork : array) {
+	public void addArray(ArrayList<Homework> array){
+		for (Homework homeWork : array) {
 			this.array.add(homeWork);
 		}
 	}
@@ -57,9 +57,9 @@ public class HomeWorksArray {
 	/**
 	 * @return new array (deep copy) this method is slow!
 	 */
-	public ArrayList<HomeWork> getArray(){
-		ArrayList<HomeWork> temp = new ArrayList<HomeWork>();
-		for (HomeWork homeWork : array) {
+	public ArrayList<Homework> getArray(){
+		ArrayList<Homework> temp = new ArrayList<Homework>();
+		for (Homework homeWork : array) {
 			temp.add(homeWork);
 		}
 		return temp;

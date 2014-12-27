@@ -15,22 +15,22 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.xmlProject.model.HomeWork;
+import com.xmlProject.model.Homework;
 
 
 public class XMLParcer {
 
 	private String path;
 	private StringBuilder stringBuilder;
-	private static final String START_TAG = "<homeWork";
-	private static final String END_TAG = "</homeWork";
+	private static final String START_TAG = "<homework";
+	private static final String END_TAG = "</homework";
 	
 	public XMLParcer(String path) throws IOException{
 		stringBuilder = new StringBuilder();
 		this.path = path;
 	}
 
-	public ArrayList<HomeWork> readFile() throws IOException {
+	public ArrayList<Homework> readFile() throws IOException {
 		try (BufferedReader bufferedReader =  new BufferedReader(new FileReader(new File(path)))){
 			String line = bufferedReader.readLine();
 		    while (line != null) {
@@ -41,10 +41,10 @@ public class XMLParcer {
 		return parceXML();
 	}
 
-	private ArrayList<HomeWork> parceXML() {
+	private ArrayList<Homework> parceXML() {
 		int start = 0;
 	    int fin = 0;
-	    ArrayList<HomeWork> array = new ArrayList<HomeWork>();
+	    ArrayList<Homework> array = new ArrayList<Homework>();
 	   	while (stringBuilder.indexOf(START_TAG, start + 1) != -1) {
 			start = stringBuilder.indexOf(START_TAG, start + 1);
 			fin =  stringBuilder.indexOf(END_TAG, fin + 1) + END_TAG.length() + 1;
@@ -53,12 +53,12 @@ public class XMLParcer {
 	   	return array;
 	}
 	
-    private HomeWork XMLToObject(String xml) {
+    private Homework XMLToObject(String xml) {
         try {
-            JAXBContext context = JAXBContext.newInstance(HomeWork.class);
+            JAXBContext context = JAXBContext.newInstance(Homework.class);
             Unmarshaller un = context.createUnmarshaller();
             StringReader s = new StringReader(xml);
-            HomeWork hw = (HomeWork) un.unmarshal(s);
+            Homework hw = (Homework) un.unmarshal(s);
             return hw;
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -66,19 +66,14 @@ public class XMLParcer {
         return null;
     }
     
-    private void writeToFile(ArrayList<HomeWork> array) throws JAXBException{
-    	JAXBContext context = JAXBContext.newInstance(HomeWork.class);
+    public void writeToFile(ArrayList<Homework> array) throws JAXBException, FileNotFoundException{
+    	JAXBContext context = JAXBContext.newInstance(Homework.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        OutputStream os = null;
-		try {
-			os = new FileOutputStream(this.path);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        for (HomeWork homeWork : array) {
-			m.marshal(homeWork, os);
+        OutputStream os = new FileOutputStream(this.path);
+        
+        for (Homework homework : array) {
+			m.marshal(homework, os);
 		}
        // m.marshal(homeWork, new File(this.path));
     }
