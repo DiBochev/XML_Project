@@ -78,8 +78,8 @@ public class Homework {
 	 */
 	@XmlElement
 	public void setTask(String task) throws InputMismatchException {
-		//setGeneral(task);
 		this.task = task;
+		setGeneral(task);
 	}
 	
 	/**
@@ -96,8 +96,8 @@ public class Homework {
 	 */
 	@XmlElement(name = "platform")
 	public void setPlatform(String platform) throws InputMismatchException {
-	//	setGeneral(platform);
 		this.platform = platform;
+		setGeneral(platform);
 	}
 
 	/**
@@ -138,8 +138,9 @@ public class Homework {
 	 */
 	@XmlElement
 	public void setHint(String hint) throws InputMismatchException {
-		//setGeneral(hint);
 		this.hint = hint;
+		setGeneral(hint);
+		
 	}
 	
 	/**
@@ -147,14 +148,14 @@ public class Homework {
 	 * @param test using for some String to validate
 	 * @throws InputMismatchException if fails the verification
 	 */
-	private void setGeneral(String test) throws InputMismatchException {
-		test = test.trim();
-		
-		if (test.isEmpty()) {
+	private void setGeneral(String fieldForTest) throws InputMismatchException {
+		fieldForTest = fieldForTest.trim();
+		if (fieldForTest.isEmpty()) {
+			fieldForTest = null;
 			throw new InputMismatchException();
 		}
-		
-		if(!test.matches("[а-яА-Я]+")){			
+		if(!fieldForTest.matches("[а-яА-Я]+")){		
+			fieldForTest = null;
 			throw new InputMismatchException();
 		}
 	}

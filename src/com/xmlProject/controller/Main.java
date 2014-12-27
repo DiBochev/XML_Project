@@ -1,10 +1,10 @@
-package com.xmlProject.model;
+package com.xmlProject.controller;
 
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
-import com.xmlProject.controller.XMLParcer;
+import com.xmlProject.model.HomeworksArray;
 
 public class Main {
 
@@ -13,7 +13,7 @@ public class Main {
 		XMLParcer p;
 		try {
 			p = new XMLParcer("D:\\XML.xml");
-			array.addArray(p.readFile());
+			array.addArray(p.parceXML());
 			System.out.println("patform is: " + array.getNextElement().getPlatform());
 			XMLParcer p2 = new  XMLParcer("D:\\XML2.xml");
 			p2.writeToFile(array.getArray());
