@@ -23,13 +23,17 @@ public class XMLParcer {
 	private StringBuilder stringBuilder;
 	private static final String START_TAG = "<homework";
 	private static final String END_TAG = "</homework";
+        
+        public XMLParcer(){
+		
+	}
 	
 	public XMLParcer(String path) throws IOException{
 		stringBuilder = new StringBuilder();
 		this.path = path;
 	}
 
-	private void readFile() throws IOException {
+	public ArrayList<Homework> readFile() throws IOException, JAXBException {
 		try (BufferedReader bufferedReader =  new BufferedReader(new FileReader(new File(path)))){
 			String line = bufferedReader.readLine();
 		    while (line != null) {
@@ -37,11 +41,10 @@ public class XMLParcer {
 		        line = bufferedReader.readLine();
 		    }
 		}
-		
+		return parceXML();
 	}
 
-	public ArrayList<Homework> parceXML() throws IOException {
-		readFile();
+	private ArrayList<Homework> parceXML() throws IOException, JAXBException {
 		int start = 0;
 	    int fin = 0;
 	    ArrayList<Homework> array = new ArrayList<Homework>();
@@ -53,17 +56,12 @@ public class XMLParcer {
 	   	return array;
 	}
 	
-    private Homework XMLToObject(String xml) {
-        try {
+    private Homework XMLToObject(String xml) throws JAXBException {
             JAXBContext context = JAXBContext.newInstance(Homework.class);
             Unmarshaller un = context.createUnmarshaller();
             StringReader s = new StringReader(xml);
             Homework hw = (Homework) un.unmarshal(s);
             return hw;
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
     
     public void writeToFile(ArrayList<Homework> array) throws JAXBException, IOException{
@@ -75,6 +73,10 @@ public class XMLParcer {
 			m.marshal(homework, os);
 		}
 //        checkFile();
+    }
+    
+    public void setPath(String path){
+        this.path = path;
     }
 //    
 //    private void checkFile() throws FileNotFoundException, IOException{

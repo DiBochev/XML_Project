@@ -38,12 +38,33 @@ public class HomeworksArray {
 			array.add(homeWork);
 		}
 	}
+        
+        public Homework getFirstElement(){
+            return array.get(0);
+        }
 	
 	public Homework getNextElement(){
+            if(currentElement + 1 >= array.size()){
+                currentElement = 0;
+            }else{
 		currentElement += 1;
-		return array.get(currentElement);
+            }
+            return array.get(currentElement);
 	}
+        
+        public Homework getPreviousElement(){
+            if (currentElement -1 < 0) {
+                currentElement = array.size() - 1;
+            }else{
+                currentElement -= 1;
+            }
+            return this.array.get(currentElement);
+        }
 	
+        public void deleteElement(){
+            array.remove(currentElement);
+        }
+                
 	/**
 	 * adds entire array
 	 * @param array ArrayList<HomeWork>
@@ -53,15 +74,8 @@ public class HomeworksArray {
 			this.array.add(homeWork);
 		}
 	}
-	
-	/**
-	 * @return new array (deep copy) this method is slow!
-	 */
-	public ArrayList<Homework> getArray(){
-		ArrayList<Homework> temp = new ArrayList<Homework>();
-		for (Homework homeWork : array) {
-			temp.add(homeWork);
-		}
-		return temp;
-	}
+        
+        public ArrayList<Homework> getArray(){
+            return array;
+        }
 }

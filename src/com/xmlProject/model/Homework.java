@@ -29,21 +29,27 @@ public class Homework {
 	public Homework(){
 		
 	}
-	
-	/**
-	 * full set constructor for initialization class Homework
-	 * 
-	 * @param name the name of the homework
-	 * @param task question for the homework
-	 * @param endDate the deadline
-	 * @param hint array of hints (if user want to give any)
-	 */
-	public Homework(String name, String task, String endDate, String hint){
-		setName(name);
-		setTask(task);
-		setEndDate(endDate);
-		setHint(hint);
-	}
+        
+        public Homework(String name, String task, String platform, String endDate, String hint){
+            setName(name);
+            setTask(task);
+            setPlatform(platform);
+            setEndDate(endDate);
+            setHint(hint);
+//            this.name = name;
+//            this.task = task;
+//            this.endDate = endDate;
+//            this.hint = hint;
+//            this.platform = platform;
+        }
+        
+        public Homework(Homework homework){
+            this.name = homework.getName();
+            this.task = homework.getTask();
+            this.endDate = homework.getEndDate();
+            this.hint = homework.getHint();
+            this.platform = homework.getPlatform();
+        }
 
 	
 	/**
@@ -56,12 +62,10 @@ public class Homework {
 	/**
 	 * this method sets the name, but validate it first
 	 * @param name the name of the homework
-	 * @throws InputMismatchException if fails the verification
 	 */
     @XmlAttribute
-	public void setName(String name) throws InputMismatchException {
-		setGeneral(name);
-		this.name = name;
+	public void setName(String name) {
+            this.name = name;
 	}
 
 	/**
@@ -74,12 +78,10 @@ public class Homework {
 	/**
 	 * this method sets the task, but validate it first
 	 * @param task question for the homework
-	 * @throws InputMismatchException if fails the verification
 	 */
 	@XmlElement
-	public void setTask(String task) throws InputMismatchException {
+	public void setTask(String task) {
 		this.task = task;
-		setGeneral(task);
 	}
 	
 	/**
@@ -92,12 +94,10 @@ public class Homework {
 	/**
 	 * this method sets the platform, but validate it first
 	 * @param platform the name of IDE to use
-	 * @throws InputMismatchException if fails the verification
 	 */
 	@XmlElement(name = "platform")
-	public void setPlatform(String platform) throws InputMismatchException {
+	public void setPlatform(String platform) {
 		this.platform = platform;
-		setGeneral(platform);
 	}
 
 	/**
@@ -114,13 +114,7 @@ public class Homework {
 	 * @throws InputMismatchException if fails the verification
 	 */
 	@XmlElement
-	public void setEndDate(String endDate) throws InputMismatchException {
-		if(endDate.isEmpty()){
-			throw new InputMismatchException();
-		}
-		if(!endDate.matches("[0-9]+.[0-9]+.[0-9]+")){			
-			throw new InputMismatchException();
-		}
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	
@@ -134,29 +128,61 @@ public class Homework {
 	/**
 	* this method sets the hint, but validate it first one by one
 	 * @param hint hint (can be empty)
-	 * @throws InputMismatchException if fails the verification
 	 */
 	@XmlElement
-	public void setHint(String hint) throws InputMismatchException {
+	public void setHint(String hint) {
 		this.hint = hint;
-		setGeneral(hint);
-		
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + ((hint == null) ? 0 : hint.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((platform == null) ? 0 : platform.hashCode());
+		result = prime * result + ((task == null) ? 0 : task.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Homework other = (Homework) obj;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (hint == null) {
+			if (other.hint != null)
+				return false;
+		} else if (!hint.equals(other.hint))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (platform == null) {
+			if (other.platform != null)
+				return false;
+		} else if (!platform.equals(other.platform))
+			return false;
+		if (task == null) {
+			if (other.task != null)
+				return false;
+		} else if (!task.equals(other.task))
+			return false;
+		return true;
 	}
 	
-	/**
-	 * this method is used for validate the fields 
-	 * @param test using for some String to validate
-	 * @throws InputMismatchException if fails the verification
-	 */
-	private void setGeneral(String fieldForTest) throws InputMismatchException {
-		fieldForTest = fieldForTest.trim();
-		if (fieldForTest.isEmpty()) {
-			fieldForTest = null;
-			throw new InputMismatchException();
-		}
-		if(!fieldForTest.matches("[а-яА-Я]+")){		
-			fieldForTest = null;
-			throw new InputMismatchException();
-		}
-	}
+	
 }

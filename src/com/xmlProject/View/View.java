@@ -5,7 +5,15 @@
  */
 package com.xmlProject.View;
 
+import com.xmlProject.controller.XMLParcer;
+import com.xmlProject.model.Homework;
+import com.xmlProject.model.HomeworksArray;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -16,6 +24,10 @@ public class View extends javax.swing.JFrame {
     /**
      * Creates new form view
      */
+    private  XMLParcer parce;
+    HomeworksArray arrayOfHomeworks;
+    
+    
     public View() {
         initComponents();
     }
@@ -29,70 +41,145 @@ public class View extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        nameText = new javax.swing.JTextField();
-        taskText = new javax.swing.JTextField();
-        platformText = new javax.swing.JTextField();
-        deadlineText = new javax.swing.JTextField();
-        hintText = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        homeworkName = new javax.swing.JTextField();
+        task = new javax.swing.JTextField();
+        platform = new javax.swing.JTextField();
+        endDate = new javax.swing.JTextField();
+        hint = new javax.swing.JTextField();
+        ButtonNext = new javax.swing.JButton();
+        ButtonPrevious = new javax.swing.JButton();
+        ButtonSubmit = new javax.swing.JButton();
+        ButtonDeleteElement = new javax.swing.JButton();
+        ButtonClearFields = new javax.swing.JButton();
+        ButtonSave = new javax.swing.JButton();
+        ButtonOpen = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Homework name:");
+        jLabel1.setText("homework name:");
 
-        jLabel2.setText("The main task:");
+        jLabel2.setText("task:");
 
-        jLabel3.setText("Platform:");
+        jLabel3.setText("platform:");
 
-        jLabel4.setText("Deadline:");
+        jLabel4.setText("end date:");
 
-        jLabel5.setText("Hint");
+        jLabel5.setText("hint");
 
-        nameText.addActionListener(new java.awt.event.ActionListener() {
+        platform.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameTextActionPerformed(evt);
+                platformActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Open...");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        hint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                hintActionPerformed(evt);
             }
         });
+
+        ButtonNext.setText("Next");
+        ButtonNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonNextActionPerformed(evt);
+            }
+        });
+
+        ButtonPrevious.setText("Previous");
+        ButtonPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonPreviousActionPerformed(evt);
+            }
+        });
+
+        ButtonSubmit.setText("Submit element");
+        ButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSubmitActionPerformed(evt);
+            }
+        });
+
+        ButtonDeleteElement.setText("Delete element");
+        ButtonDeleteElement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonDeleteElementActionPerformed(evt);
+            }
+        });
+
+        ButtonClearFields.setText("Clear fields");
+        ButtonClearFields.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonClearFieldsActionPerformed(evt);
+            }
+        });
+
+        ButtonSave.setText("Save");
+        ButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonSaveActionPerformed(evt);
+            }
+        });
+
+        ButtonOpen.setText("Open");
+        ButtonOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOpenActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setVisible(false);
+        jLabel6.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel6.setText("error loading file");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nameText)
-                            .addComponent(taskText)
-                            .addComponent(platformText)
-                            .addComponent(deadlineText)
-                            .addComponent(hintText, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 350, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(171, 171, 171))))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(ButtonPrevious)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ButtonSubmit)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(task, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(platform, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(homeworkName)
+                                    .addComponent(endDate)
+                                    .addComponent(hint, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ButtonNext))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ButtonDeleteElement)
+                                .addGap(29, 29, 29)
+                                .addComponent(ButtonClearFields))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(ButtonSave)
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(ButtonOpen))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,54 +187,197 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(homeworkName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(taskText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(task, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(platformText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(platform, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ButtonNext)
+                    .addComponent(ButtonPrevious))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(deadlineText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(endDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(hintText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(376, Short.MAX_VALUE))
+                    .addComponent(hint, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonSubmit)
+                    .addComponent(ButtonDeleteElement)
+                    .addComponent(ButtonClearFields))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonSave)
+                    .addComponent(ButtonOpen))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>                        
 
-    private void nameTextActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void platformActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
     }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        jFileChooser1.showOpenDialog(jLabel1);
-        
-     //   File f = JFileChooser1.
-    }                                        
+    private void hintActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        // TODO add your handling code here:
+    }                                    
 
+    private void ButtonNextActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    	Homework temp = new Homework();
+    	try{
+        	temp = new Homework(arrayOfHomeworks.getNextElement());
+        	jLabel6.setVisible(false);
+        }catch(NullPointerException e){
+        	jLabel6.setText("no elments");
+        	jLabel6.setVisible(true);
+        }
+        updateFields(temp);
+    }                                          
+
+    private void ButtonOpenActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter( "xml files (*.xml)", "xml");
+        chooser.setFileFilter(xmlfilter);
+        chooser.setFileFilter(xmlfilter);
+        chooser.showOpenDialog(null);
+        jLabel6.setVisible(false);
+        arrayOfHomeworks = new HomeworksArray();
+        try {
+         	parce = new XMLParcer(chooser.getSelectedFile().getAbsolutePath());
+			arrayOfHomeworks.addArray(parce.readFile());
+			homeworkName.setText(arrayOfHomeworks.getFirstElement().getName());
+			task.setText(arrayOfHomeworks.getFirstElement().getTask());
+			platform.setText(arrayOfHomeworks.getFirstElement().getPlatform());
+			endDate.setText(arrayOfHomeworks.getFirstElement().getEndDate());
+			hint.setText(arrayOfHomeworks.getFirstElement().getHint());
+		} catch (IOException | JAXBException e) {
+			jLabel6.setText("cannot open this file");
+			jLabel6.setVisible(true);
+		} catch(IndexOutOfBoundsException e){
+			jLabel6.setText("wrong file or incorrect file!");
+			jLabel6.setVisible(true);
+		}
+    }
+
+    private void ButtonPreviousActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    	Homework temp = new Homework();
+    	try{
+    		temp = new Homework(arrayOfHomeworks.getPreviousElement());
+    		jLabel6.setVisible(false);
+    	}catch(NullPointerException e){
+        	jLabel6.setText("no elments");
+        	jLabel6.setVisible(true);
+        }
+        updateFields(temp);
+    }                                              
+
+    private void ButtonDeleteElementActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        try{
+        	arrayOfHomeworks.deleteElement();
+        	Homework temp = new Homework(arrayOfHomeworks.getNextElement());
+        	updateFields(temp);
+        	jLabel6.setVisible(false);
+        } catch(NullPointerException e){
+        	jLabel6.setText("cannot save nothing!");
+        	jLabel6.setVisible(true);
+        }
+    }                                                   
+
+    private void ButtonClearFieldsActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+        homeworkName.setText(null);
+        task.setText(null);
+        platform.setText(null);
+        endDate.setText(null);
+        hint.setText(null);
+    }                                                 
+
+    private void ButtonSubmitActionPerformed(java.awt.event.ActionEvent evt) {
+    	try{
+    		arrayOfHomeworks.addElement(new Homework(homeworkName.getText(), task.getText(), platform.getText(), endDate.getText(), hint.getText()));
+    	}catch(NullPointerException e){
+    		arrayOfHomeworks = new HomeworksArray(new Homework(homeworkName.getText(), task.getText(), platform.getText(), endDate.getText(), hint.getText()));
+    	}
+    }                                            
+
+    private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        try {
+            parce.writeToFile(arrayOfHomeworks.getArray());
+            jLabel6.setVisible(false);
+        } catch (JAXBException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(NullPointerException e){
+        	if(arrayOfHomeworks.getClass() != null){
+        		//make field visible!
+        	}
+        	jLabel6.setText("cannot save nothing!");
+        	jLabel6.setVisible(true);
+        }
+    }                                          
+
+    private void updateFields(Homework temp){
+        homeworkName.setText(temp.getName());
+        task.setText(temp.getTask());
+        platform.setText(temp.getPlatform());
+        endDate.setText(temp.getEndDate());
+        hint.setText(temp.getHint());
+    }
+    
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(View.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new View().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTextField deadlineText;
-    private javax.swing.JTextField hintText;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JButton ButtonClearFields;
+    private javax.swing.JButton ButtonDeleteElement;
+    private javax.swing.JButton ButtonNext;
+    private javax.swing.JButton ButtonOpen;
+    private javax.swing.JButton ButtonPrevious;
+    private javax.swing.JButton ButtonSave;
+    private javax.swing.JButton ButtonSubmit;
+    private javax.swing.JTextField endDate;
+    private javax.swing.JTextField hint;
+    private javax.swing.JTextField homeworkName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField nameText;
-    private javax.swing.JTextField platformText;
-    private javax.swing.JTextField taskText;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField platform;
+    private javax.swing.JTextField task;
     // End of variables declaration                   
 }
