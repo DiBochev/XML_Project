@@ -24,15 +24,28 @@ public class XMLParcer {
 	private static final String START_TAG = "<homework";
 	private static final String END_TAG = "</homework";
         
+        /**
+         * empty constructor 
+         */
         public XMLParcer(){
 		
 	}
 	
+	/**
+	 * @param path
+	 * @throws IOException
+	 * constructor with path for xml
+	 */
 	public XMLParcer(String path) throws IOException{
 		stringBuilder = new StringBuilder();
 		this.path = path;
 	}
 
+	/**
+	 * @return returns ArrayList of homework objects by calling parceXML
+	 * @throws IOException
+	 * @throws JAXBException
+	 */
 	public ArrayList<Homework> readFile() throws IOException, JAXBException {
 		try (BufferedReader bufferedReader =  new BufferedReader(new FileReader(new File(path)))){
 			String line = bufferedReader.readLine();
@@ -44,6 +57,11 @@ public class XMLParcer {
 		return parceXML();
 	}
 
+	/**
+	 * @return  ArrayList of homework objects
+	 * @throws IOException
+	 * @throws JAXBException
+	 */
 	private ArrayList<Homework> parceXML() throws IOException, JAXBException {
 		int start = 0;
 	    int fin = 0;
@@ -56,6 +74,11 @@ public class XMLParcer {
 	   	return array;
 	}
 	
+    /**
+     * @param xml
+     * @return homework Object from xml
+     * @throws JAXBException
+     */
     private Homework XMLToObject(String xml) throws JAXBException {
             JAXBContext context = JAXBContext.newInstance(Homework.class);
             Unmarshaller un = context.createUnmarshaller();
@@ -64,31 +87,30 @@ public class XMLParcer {
             return hw;
     }
     
+    /**
+     * @param array
+     * @throws JAXBException
+     * @throws IOException
+     * writes objects to xml file
+     */
     public void writeToFile(ArrayList<Homework> array) throws JAXBException, IOException{
     	JAXBContext context = JAXBContext.newInstance(Homework.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        //m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+       // m.setProperty("com.sun.xml.bind.xmlDeclaration", Boolean.FALSE);
         OutputStream os = new FileOutputStream(this.path);
         for (Homework homework : array) {
 			m.marshal(homework, os);
 		}
-//        checkFile();
     }
     
+    /**
+     * set path of xml
+     * @param path
+     */
     public void setPath(String path){
         this.path = path;
     }
-//    
-//    private void checkFile() throws FileNotFoundException, IOException{
-//    
-//    	String remove = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
-//    	readFile();
-//    	int start = 0;
-//    	while (stringBuilder.indexOf(remove, start + 1) != -1) {
-//			start = stringBuilder.indexOf(remove, start + 1);
-//			stringBuilder.delete(start, start + remove.length());
-//		}
-//    	System.out.println("dsd");
-//    }
     
 }

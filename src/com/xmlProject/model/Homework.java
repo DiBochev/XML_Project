@@ -36,11 +36,6 @@ public class Homework {
             setPlatform(platform);
             setEndDate(endDate);
             setHint(hint);
-//            this.name = name;
-//            this.task = task;
-//            this.endDate = endDate;
-//            this.hint = hint;
-//            this.platform = platform;
         }
         
         public Homework(Homework homework){

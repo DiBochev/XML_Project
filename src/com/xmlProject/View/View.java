@@ -8,9 +8,12 @@ package com.xmlProject.View;
 import com.xmlProject.controller.XMLParcer;
 import com.xmlProject.model.Homework;
 import com.xmlProject.model.HomeworksArray;
+
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
@@ -40,7 +43,6 @@ public class View extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -310,6 +312,7 @@ public class View extends javax.swing.JFrame {
 
     private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {                                           
         try {
+    		parce = new XMLParcer("new" + new Random(System.currentTimeMillis()).nextInt() + ".xml");
             parce.writeToFile(arrayOfHomeworks.getArray());
             jLabel6.setVisible(false);
         } catch (JAXBException ex) {
@@ -317,6 +320,7 @@ public class View extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
         } catch(NullPointerException e){
+        	e.printStackTrace();
         	if(arrayOfHomeworks.getClass() != null){
         		//make field visible!
         	}
