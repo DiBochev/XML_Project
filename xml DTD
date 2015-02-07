@@ -1,0 +1,7 @@
+
+<!ELEMENT endDate ( #PCDATA ) >
+<!ELEMENT hint ( #PCDATA ) >
+<!ELEMENT homework ( task, platform, endDate, hint ) ><!ATTLIST homework name NMTOKEN #REQUIRED >
+
+<!ELEMENT platform ( #PCDATA ) >
+<!ELEMENT task ( #PCDATA ) >

@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
@@ -23,6 +25,8 @@ public class XMLParcer {
 	private StringBuilder stringBuilder;
 	private static final String START_TAG = "<homework";
 	private static final String END_TAG = "</homework";
+	private static final String HTML_START = "<!DOCTYPE html><html><body><table border=\"1\" style=\"width:100%\"> <tr><td>name</td><td>task</td><td>end date</td><td>hint</td><td>platform</td></tr>";
+	private static final String HTML_END = "</table></body></html>";
         
         /**
          * empty constructor 
@@ -97,11 +101,30 @@ public class XMLParcer {
     	JAXBContext context = JAXBContext.newInstance(Homework.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        //m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-       // m.setProperty("com.sun.xml.bind.xmlDeclaration", Boolean.FALSE);
+        StringBuilder sb = new StringBuilder();
+        sb.append(HTML_START);
+        
         OutputStream os = new FileOutputStream(this.path);
         for (Homework homework : array) {
+        	sb.append("<tr>");
+        	sb.append("<td>" + homework.getName() + "<//td>");
+        	sb.append("<td>" + homework.getTask() + "<//td>");
+        	sb.append("<td>" + homework.getEndDate() + "<//td>");
+        	sb.append("<td>" + homework.getHint() + "<//td>");
+        	sb.append("<td>" + homework.getPlatform() + "<//td>");
+        	sb.append("<//tr>");
 			m.marshal(homework, os);
+		}
+        sb.append(HTML_END);
+        try (PrintStream out = new PrintStream(new FileOutputStream("web.html"))) {
+
+        	OutputStreamWriter o = new OutputStreamWriter(out, "Unicode");
+        	out.write(sb.toString().getBytes());
+        	o.flush();
+        	o.close();
+        }catch (Exception e) {
+        	System.out.println("cannot save to html");
+			e.printStackTrace();
 		}
     }
     
