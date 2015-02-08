@@ -50,8 +50,7 @@ public class XMLParcer {
 	 * @throws JAXBException
 	 */
 	public ArrayList<Homework> readFile() throws IOException, JAXBException {
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(
-				new File(path)))) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)))) {
 			String line = bufferedReader.readLine();
 			while (line != null) {
 				stringBuilder.append(line);
@@ -98,8 +97,7 @@ public class XMLParcer {
 	 * @throws IOException
 	 *             writes objects to xml file
 	 */
-	public void writeToFile(ArrayList<Homework> array) throws JAXBException,
-			IOException {
+	public void writeToFile(ArrayList<Homework> array) throws JAXBException, IOException {
 		JAXBContext context = JAXBContext.newInstance(Homework.class);
 		Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -125,7 +123,6 @@ public class XMLParcer {
 		}
 		sb.append(HTML_END);
 		try (PrintStream out = new PrintStream(new FileOutputStream("web.html"))) {
-
 			OutputStreamWriter o = new OutputStreamWriter(out, "Unicode");
 			out.write(sb.toString().getBytes());
 			o.flush();
