@@ -1,0 +1,7 @@
+<!ELEMENT endDate ( #PCDATA ) >
+<!ELEMENT hint ( #PCDATA ) >
+<!ELEMENT homework ( title, task, platform, endDate, hint ) >
+<!ELEMENT homeworks ( homework+ ) >
+<!ELEMENT platform ( #PCDATA ) >
+<!ELEMENT task ( #PCDATA ) >
+<!ELEMENT title ( #PCDATA ) >

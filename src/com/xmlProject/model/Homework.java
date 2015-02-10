@@ -2,10 +2,9 @@ package com.xmlProject.model;
 
 import java.util.InputMismatchException;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -14,14 +13,16 @@ import javax.xml.bind.annotation.XmlType;
  */
 
 @XmlRootElement(name = "homework")
-@XmlType(propOrder = {"task", "platform", "endDate", "hint"})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Homework {
 
-	private String name;
+	
+	private String title;
 	private String task;
 	private String platform;
 	private String endDate;
 	private String hint;
+	
 	
 	/**
 	 * an empty constructor for initialization
@@ -30,37 +31,35 @@ public class Homework {
 		
 	}
         
-        public Homework(String name, String task, String platform, String endDate, String hint){
-            setName(name);
-            setTask(task);
-            setPlatform(platform);
-            setEndDate(endDate);
-            setHint(hint);
-        }
+	public Homework(String name, String task, String platform, String endDate, String hint) {
+		setTitle(name);
+		setTask(task);
+		setPlatform(platform);
+		setEndDate(endDate);
+		setHint(hint);
+	}
         
-        public Homework(Homework homework){
-            this.name = homework.getName();
-            this.task = homework.getTask();
-            this.endDate = homework.getEndDate();
-            this.hint = homework.getHint();
-            this.platform = homework.getPlatform();
-        }
-
-	
-	/**
-	 * @return String with the name of the homework
-	 */
-	public String getName() {
-		return name;
+	public Homework(Homework homework) {
+		this.title = homework.getTitle();
+		this.task = homework.getTask();
+		this.endDate = homework.getEndDate();
+		this.hint = homework.getHint();
+		this.platform = homework.getPlatform();
 	}
 
 	/**
-	 * this method sets the name, but validate it first
-	 * @param name the name of the homework
+	 * @return String with the name of the homework
 	 */
-    @XmlAttribute
-	public void setName(String name) {
-            this.name = name;
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * this method sets the title, but validate it first
+	 * @param title the title of the homework
+	 */
+	public void setTitle(String title) {
+            this.title = title;
 	}
 
 	/**
@@ -74,7 +73,6 @@ public class Homework {
 	 * this method sets the task, but validate it first
 	 * @param task question for the homework
 	 */
-	@XmlElement
 	public void setTask(String task) {
 		this.task = task;
 	}
@@ -90,7 +88,6 @@ public class Homework {
 	 * this method sets the platform, but validate it first
 	 * @param platform the name of IDE to use
 	 */
-	@XmlElement(name = "platform")
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}
@@ -108,7 +105,6 @@ public class Homework {
 	 * @param endDate the deadline
 	 * @throws InputMismatchException if fails the verification
 	 */
-	@XmlElement
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
@@ -124,7 +120,6 @@ public class Homework {
 	* this method sets the hint, but validate it first one by one
 	 * @param hint hint (can be empty)
 	 */
-	@XmlElement
 	public void setHint(String hint) {
 		this.hint = hint;
 	}
@@ -135,7 +130,7 @@ public class Homework {
 		int result = 1;
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + ((hint == null) ? 0 : hint.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result
 				+ ((platform == null) ? 0 : platform.hashCode());
 		result = prime * result + ((task == null) ? 0 : task.hashCode());
@@ -161,10 +156,10 @@ public class Homework {
 				return false;
 		} else if (!hint.equals(other.hint))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (title == null) {
+			if (other.title != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!title.equals(other.title))
 			return false;
 		if (platform == null) {
 			if (other.platform != null)

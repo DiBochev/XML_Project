@@ -255,8 +255,8 @@ public class View extends javax.swing.JFrame {
         arrayOfHomeworks = new HomeworksArray();
         try {
          	parce = new XMLParcer(chooser.getSelectedFile().getAbsolutePath());
-			arrayOfHomeworks.addArray(parce.readFile());
-			homeworkName.setText(arrayOfHomeworks.getFirstElement().getName());
+			arrayOfHomeworks = parce.readFile();
+			homeworkName.setText(arrayOfHomeworks.getFirstElement().getTitle());
 			task.setText(arrayOfHomeworks.getFirstElement().getTask());
 			platform.setText(arrayOfHomeworks.getFirstElement().getPlatform());
 			endDate.setText(arrayOfHomeworks.getFirstElement().getEndDate());
@@ -312,8 +312,8 @@ public class View extends javax.swing.JFrame {
 
     private void ButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {                                           
         try {
-    		parce = new XMLParcer("new" + new Random(System.currentTimeMillis()).nextInt() + ".xml");
-            parce.writeToFile(arrayOfHomeworks.getArray());
+    		parce = new XMLParcer("data\\new" + new Random(System.currentTimeMillis()).nextInt() + ".xml");
+            parce.writeToFile(arrayOfHomeworks);
             jLabel6.setVisible(false);
         } catch (JAXBException ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
@@ -330,7 +330,7 @@ public class View extends javax.swing.JFrame {
     }                                          
 
     private void updateFields(Homework temp){
-        homeworkName.setText(temp.getName());
+        homeworkName.setText(temp.getTitle());
         task.setText(temp.getTask());
         platform.setText(temp.getPlatform());
         endDate.setText(temp.getEndDate());

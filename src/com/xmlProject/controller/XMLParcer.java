@@ -1,6 +1,8 @@
 package com.xmlProject.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -11,20 +13,41 @@ import java.io.PrintStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+
+
+
+
+
+
+
+
+
+
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Result;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.fop.apps.FOPException;
+import org.apache.fop.apps.FOUserAgent;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
 
 import com.xmlProject.model.Homework;
+import com.xmlProject.model.HomeworksArray;
 
 public class XMLParcer {
 
 	private String path;
 	private StringBuilder stringBuilder;
-	private static final String START_TAG = "<homework";
-	private static final String END_TAG = "</homework";
-	private static final String HTML_START = "<!DOCTYPE html><html><body><table border=\"1\" style=\"width:100%\"> <tr><td>name</td><td>task</td><td>end date</td><td>hint</td><td>platform</td></tr>";
+	private static final String HTML_START = "<!DOCTYPE html><html><body><table border=\"1\" style=\"width:100%\"> <tr bgcolor=\"green\"><td>name</td><td>task</td><td>end date</td><td>hint</td><td>platform</td></tr>";
 	private static final String HTML_END = "</table></body></html>";
 
 	/**
@@ -49,7 +72,7 @@ public class XMLParcer {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	public ArrayList<Homework> readFile() throws IOException, JAXBException {
+	public HomeworksArray readFile() throws IOException, JAXBException {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)))) {
 			String line = bufferedReader.readLine();
 			while (line != null) {
@@ -57,38 +80,20 @@ public class XMLParcer {
 				line = bufferedReader.readLine();
 			}
 		}
-		return parceXML();
+		return XMLToObject(stringBuilder.toString());
 	}
-
-	/**
-	 * @return ArrayList of homework objects
-	 * @throws IOException
-	 * @throws JAXBException
-	 */
-	private ArrayList<Homework> parceXML() throws IOException, JAXBException {
-		int start = 0;
-		int fin = 0;
-		ArrayList<Homework> array = new ArrayList<Homework>();
-		while (stringBuilder.indexOf(START_TAG, start + 1) != -1) {
-			start = stringBuilder.indexOf(START_TAG, start + 1);
-			fin = stringBuilder.indexOf(END_TAG, fin + 1) + END_TAG.length()
-					+ 1;
-			array.add(XMLToObject(stringBuilder.substring(start, fin)));
-		}
-		return array;
-	}
-
+	
 	/**
 	 * @param xml
 	 * @return homework Object from xml
 	 * @throws JAXBException
 	 */
-	private Homework XMLToObject(String xml) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(Homework.class);
+	private HomeworksArray XMLToObject(String xml) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(HomeworksArray.class);
 		Unmarshaller un = context.createUnmarshaller();
 		StringReader s = new StringReader(xml);
-		Homework hw = (Homework) un.unmarshal(s);
-		return hw;
+		HomeworksArray hwarr = (HomeworksArray) un.unmarshal(s);
+		return hwarr;
 	}
 
 	/**
@@ -97,15 +102,41 @@ public class XMLParcer {
 	 * @throws IOException
 	 *             writes objects to xml file
 	 */
-	public void writeToFile(ArrayList<Homework> array) throws JAXBException, IOException {
-		JAXBContext context = JAXBContext.newInstance(Homework.class);
+	public void writeToFile(HomeworksArray array) throws JAXBException, IOException {
+		JAXBContext context = JAXBContext.newInstance(HomeworksArray.class);
 		Marshaller m = context.createMarshaller();
-		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		OutputStream os = new FileOutputStream(this.path);
-		for (Homework homework : array) {
-			m.marshal(homework, os);
+		m.marshal(array, os);
+		saveAsHTML(array.getArray());
+		try {
+			saveAsPDF();
+		} catch (FOPException | TransformerException e) {
+			e.printStackTrace();
 		}
-		saveAsHTML(array);
+	}
+
+	private void saveAsPDF() throws FOPException, TransformerException, IOException {
+		File xsltfile = new File("data\\homework.xsl");
+		StreamSource source = new StreamSource(new File(this.path));
+		StreamSource transformSource = new StreamSource(xsltfile);
+		FopFactory fopFactory = FopFactory.newInstance();
+		FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		Transformer xslfoTransformer;
+		net.sf.saxon.TransformerFactoryImpl impl = new net.sf.saxon.TransformerFactoryImpl();
+		xslfoTransformer = impl.newTransformer(transformSource);
+		Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, outStream);
+		Result res = new SAXResult(fop.getDefaultHandler());
+		xslfoTransformer.transform(source, res);
+		File pdffile = new File("data\\Result" + System.currentTimeMillis() + ".pdf");
+		OutputStream out = new FileOutputStream(pdffile);
+		out = new BufferedOutputStream(out);
+		FileOutputStream str = new FileOutputStream(pdffile);
+		str.write(outStream.toByteArray());
+		str.close();
+		out.close();
+		
 	}
 
 	private void saveAsHTML(ArrayList<Homework> array) {
@@ -114,7 +145,7 @@ public class XMLParcer {
 		sb.append(HTML_START);
 		for (Homework homework : array) {
 			sb.append("<tr>");
-			sb.append("<td>" + homework.getName() + "<//td>");
+			sb.append("<td>" + homework.getTitle() + "<//td>");
 			sb.append("<td>" + homework.getTask() + "<//td>");
 			sb.append("<td>" + homework.getEndDate() + "<//td>");
 			sb.append("<td>" + homework.getHint() + "<//td>");
@@ -122,7 +153,7 @@ public class XMLParcer {
 			sb.append("<//tr>");
 		}
 		sb.append(HTML_END);
-		try (PrintStream out = new PrintStream(new FileOutputStream("web.html"))) {
+		try (PrintStream out = new PrintStream(new FileOutputStream("data\\web.html"))) {
 			OutputStreamWriter o = new OutputStreamWriter(out, "Unicode");
 			out.write(sb.toString().getBytes());
 			o.flush();

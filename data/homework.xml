@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="homework.xsl"?>
+<homeworks>
+	<homework>
+		<title>Company</title>
+	    <task>write program that has servant: name, credit card and years</task>
+	    <platform>Eclipse</platform>
+	    <endDate>07.10.2014</endDate>
+	    <hint>Create class servant</hint>
+	</homework>
+	<homework>
+		<title>Company2</title>
+	    <task>write program that has servant: name</task>
+	    <platform>NetBeans</platform>
+	    <endDate>07.10.2014</endDate>
+	    <hint>NAN</hint>
+	</homework>
+</homeworks>
